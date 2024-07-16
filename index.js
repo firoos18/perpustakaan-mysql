@@ -7,6 +7,7 @@ require("dotenv").config();
 const sequelize = require("./helpers/init_mysql");
 const BukuRoute = require("./routes/Buku.route");
 const AuthRoute = require("./routes/Auth.route");
+const PeminjamanRoute = require("./routes/Peminjaman.route");
 
 const app = express();
 app.use(express.json());
@@ -30,6 +31,7 @@ app.get("/", async (req, res, next) => {
 
 app.use("/buku", BukuRoute);
 app.use("/auth", AuthRoute);
+app.use("/peminjaman", PeminjamanRoute);
 
 app.use(async (req, res, next) => {
   next(createError.NotFound());

@@ -6,14 +6,18 @@ async function getAllBuku(req, res, next) {
   try {
     const bukuList = await Buku.findAll();
 
-    const response = bukuList.map((buku) => ({
-      id: buku.id,
-      judul: buku.judul,
-      pengarang: buku.pengarang,
-      sinopsis: buku.sinopsis,
-      status: buku.status,
-      imageUrl: getImageUrl(req.protocol, req.get("host"), buku),
-    }));
+    const response = {
+      status: 200,
+      message: "success",
+      data: bukuList.map((buku) => ({
+        id: buku.id,
+        judul: buku.judul,
+        pengarang: buku.pengarang,
+        sinopsis: buku.sinopsis,
+        status: buku.status,
+        imageUrl: getImageUrl(req.protocol, req.get("host"), buku),
+      })),
+    };
 
     res.json(response);
   } catch (error) {
@@ -140,6 +144,37 @@ async function editBuku(req, res, next) {
   }
 }
 
+async function updateStatus(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const buku = await Buku.findByPk(id);
+    if (!buku)
+      throw createError.NotFound(`Buku with Buku ID ${id} is Not Found`);
+
+    buku.status = buku.status === "tersedia" ? "dipinjam" : "tersedia";
+
+    await buku.save();
+
+    const response = {
+      status: 200,
+      message: "Buku updated successfully",
+      data: {
+        id: buku.id,
+        judul: buku.judul,
+        pengarang: buku.pengarang,
+        sinopsis: buku.sinopsis,
+        status: buku.status,
+        imageUrl: getImageUrl(req.protocol, req.get("host"), buku),
+      },
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function deleteBuku(req, res, next) {
   try {
     const { id } = req.params;
@@ -166,4 +201,5 @@ module.exports = {
   getBukuById,
   editBuku,
   deleteBuku,
+  updateStatus,
 };

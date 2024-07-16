@@ -38,23 +38,6 @@ Buku.init(
     modelName: "Buku",
     tableName: "buku",
     timestamps: false,
-    getterMethods: {
-      imageUrl() {
-        return `/api/buku/${this.id}/image`;
-      },
-    },
-    scopes: {
-      withStatus: {
-        attributes: [
-          "id",
-          "judul",
-          "pengarang",
-          "sinopsis",
-          "status",
-          "imagePath",
-        ],
-      },
-    },
   }
 );
 

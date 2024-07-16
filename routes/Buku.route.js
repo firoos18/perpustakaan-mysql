@@ -15,6 +15,8 @@ router.patch(
   BukuController.editBuku
 );
 
+router.patch("/:id/status", verifyAccessToken, BukuController.updateStatus);
+
 router.delete("/:id", verifyAccessToken, BukuController.deleteBuku);
 
 router.post(
