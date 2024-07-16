@@ -4,12 +4,12 @@ const path = require("path");
 require("dotenv").config();
 
 const sequelize = new Sequelize(
-  "perpustakaan",
-  "avnadmin",
-  "AVNS_mDUGFvjqea8ekTVKhkD",
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
-    host: "mysql-36fe9ea6-perpustakaan.h.aivencloud.com",
-    port: "14179",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     dialect: "mysql",
     pool: {
       max: 5,
