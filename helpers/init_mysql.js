@@ -8,7 +8,8 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    dialect: require("mysql2"),
+    dialect: "mysql",
+    dialectModule: require("mysql2"),
     pool: {
       max: 5,
       min: 0,
